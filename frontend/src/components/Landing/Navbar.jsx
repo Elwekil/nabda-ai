@@ -84,6 +84,10 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 py-4 px-6">
           <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between py-2">
+              <span className="text-sm font-semibold text-gray-500">اللغة</span>
+              <LanguageSwitcher />
+            </div>
             <a href="#features" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>المميزات</a>
             <a href="#how-it-works" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>كيف يعمل</a>
             <a href="#sos" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>SOS طوارئ</a>
