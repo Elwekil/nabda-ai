@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Light mode variables (default) ── */
+:root {
+  --bg-page:       #f9fafb;
+  --bg-card:       #ffffff;
+  --bg-sidebar:    #ffffff;
+  --bg-header:     #ffffff;
+  --bg-input:      #ffffff;
+  --bg-hover:      #f3f4f6;
+  --bg-muted:      #f3f4f6;
+
+  --text-primary:  #111827;
+  --text-secondary:#374151;
+  --text-muted:    #6b7280;
+  --text-faint:    #9ca3af;
+
+  --border:        #e5e7eb;
+  --border-input:  #d1d5db;
+
+  --shadow:        0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* ── Dark mode variables ── */
+html.dark {
+  --bg-page:       #030712;
+  --bg-card:       #1f2937;
+  --bg-sidebar:    #111827;
+  --bg-header:     #111827;
+  --bg-input:      #374151;
+  --bg-hover:      #374151;
+  --bg-muted:      #374151;
+
+  --text-primary:  #f9fafb;
+  --text-secondary:#e5e7eb;
+  --text-muted:    #9ca3af;
+  --text-faint:    #6b7280;
+
+  --border:        #374151;
+  --border-input:  #4b5563;
+
+  --shadow:        0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* ── Apply variables to elements ── */
+@layer base {
+  * { font-family: 'Cairo', sans-serif; }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    transition: background-color 0.2s, color 0.2s;
+  }
+}
+
+@layer components {
+  /* Card */
+  .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    @apply rounded-2xl p-5 hover:shadow-md transition-all duration-300;
+  }
+
+  /* Stat card */
+  .stat-card {
+    @apply bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-5;
+  }
+  html.dark .stat-card {
+    background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(67,56,202,0.1));
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-primary-600 text-white px-5 py-2.5 rounded-xl hover:bg-primary-700 transition-all duration-200 shadow-sm;
+  }
+  .btn-secondary {
+    background-color: var(--bg-muted);
+    color: var(--text-secondary);
+    @apply px-5 py-2.5 rounded-xl transition-all duration-200;
+  }
+  .btn-danger {
+    @apply bg-red-600 text-white px-5 py-2.5 rounded-xl hover:bg-red-700 transition-all duration-200;
+  }
+
+  /* Progress */
+  .progress-bar {
+    background-color: var(--bg-muted);
+    @apply h-2 rounded-full overflow-hidden;
+  }
+  .progress-fill {
+    @apply h-full bg-primary-600 rounded-full transition-all duration-500;
+  }
+}
+
+/* ── Global element overrides for dark mode ── */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-input) !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: var(--text-faint) !important;
+}
+
+html.dark label {
+  color: var(--text-secondary);
+}
+
+html.dark h1, html.dark h2, html.dark h3,
+html.dark h4, html.dark h5, html.dark h6 {
+  color: var(--text-primary);
+}
+
+html.dark p, html.dark span, html.dark li {
+  color: inherit;
+}
+
+/* selects */
+html.dark select {
+  background-color: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-input) !important;
+}
+
+/* scrollbar */
+html.dark ::-webkit-scrollbar { width: 6px; }
+html.dark ::-webkit-scrollbar-track { background: var(--bg-page); }
+html.dark ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 3px; }
