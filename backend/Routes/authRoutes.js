@@ -9,7 +9,6 @@ const { protect } = require('../Middleware/authMiddleware');
 const {
     signupLimiter,
     loginLimiter,
-    otpLimiter,
     forgotPasswordLimiter,
     verifyResetCodeLimiter,
     resetPasswordLimiter
@@ -17,8 +16,8 @@ const {
 
 // Public routes
 router.post('/signup', signupLimiter, signup);
-router.post('/verify-otp', otpLimiter, verifyOTP);
-router.post('/resend-otp', otpLimiter, resendOTP);
+router.post('/verify-otp', verifyOTP);
+router.post('/resend-otp', resendOTP);
 router.post('/login', loginLimiter, login);
 
 // Password reset
