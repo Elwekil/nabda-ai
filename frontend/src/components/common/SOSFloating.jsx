@@ -37,7 +37,7 @@ export default function SOSFloating() {
     try {
       // Get location (local only - no external API)
       const locationData = await getLocation()
-      
+
       const { data } = await api.post('/sos/emergency', { location: locationData })
       const { contactsNotified } = data.data
       setResult(data.data)
@@ -63,7 +63,7 @@ export default function SOSFloating() {
       <button
         onClick={handleOpen}
         className="fixed bottom-4 left-4 z-40 w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95"
-        title="طوارئ - طلب مساعدة"
+        title="SOS طوارئ"
       >
         <Shield className="w-4 h-4" />
       </button>

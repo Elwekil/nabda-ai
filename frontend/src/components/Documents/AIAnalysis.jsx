@@ -132,8 +132,27 @@ export default function AIAnalysis({ document, onAnalysisComplete }) {
 
   // ── Render helpers ─────────────────────────────────────────────────────────
 
-  // تم حذف شريط مستوى الثقة بناءً على طلب المستخدم
-  // const renderConfidenceBar = (confidence) => null
+  const renderConfidenceBar = (confidence) => {
+    const numericConfidence = Number(confidence)
+    if (Number.isNaN(numericConfidence)) return null
+
+    const safeConfidence = Math.max(0, Math.min(100, numericConfidence))
+
+    return (
+      <div className="mb-5">
+        <div className="mb-2 flex items-center justify-between text-xs font-medium text-gray-600">
+          <span>{t('ai_analysis.confidence')}</span>
+          <span>{safeConfidence}%</span>
+        </div>
+        <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-500 transition-all duration-300"
+            style={{ width: `${safeConfidence}%` }}
+          />
+        </div>
+      </div>
+    )
+  }
 
   const renderExtractedValues = (values, extractedText) => {
     return (
@@ -227,9 +246,9 @@ export default function AIAnalysis({ document, onAnalysisComplete }) {
           <h3 className="text-lg font-bold text-gray-900">نتائج التحليل</h3>
         </div>
 
-        {/* تم حذف شريط مستوى الثقة بناءً على طلب المستخدم */}
+        {renderConfidenceBar(data.confidence)}
         {renderExtractedValues(data.extractedValues, data.extractedText)}
-        
+
         {data.analysis && (
           <div className="mb-6">
             <h4 className="text-sm font-semibold text-gray-700 mb-3">التحليل الطبي</h4>
@@ -238,15 +257,15 @@ export default function AIAnalysis({ document, onAnalysisComplete }) {
             </div>
           </div>
         )}
-        
+
         {renderTreatmentSuggestions(data.treatmentSuggestions)}
         {renderWarnings(data.warnings)}
-        
+
         <div className="pt-4 border-t border-gray-200">
           <div className="flex items-start gap-2 text-xs text-gray-500 bg-gray-50 rounded-lg p-3">
             <AlertCircle className="w-4 h-4 mt-0.5 shrink-0 text-gray-400" />
             <p className="leading-relaxed">
-              ⚠️ هذا التحليل مُنشأ بواسطة الذكاء الاصطناعي ويوفر معلومات عامة فقط. 
+              ⚠️ هذا التحليل مُنشأ بواسطة الذكاء الاصطناعي ويوفر معلومات عامة فقط.
               لا يُغني عن استشارة طبيب مؤهل.
             </p>
           </div>
@@ -319,12 +338,12 @@ export default function AIAnalysis({ document, onAnalysisComplete }) {
         {localAnalyzing ? (
           <>
             <Loader2 className="w-5 h-5 animate-spin" />
-            جاري التحليل...
+            {t('ai_analysis.analyzing')}
           </>
         ) : (
           <>
             <Zap className="w-5 h-5" />
-            تحليل الصورة
+            {t('ai_analysis.analyze_image')}
           </>
         )}
       </button>
@@ -383,7 +402,7 @@ export default function AIAnalysis({ document, onAnalysisComplete }) {
           <button onClick={handleRunAnalysis}
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-medium text-sm">
             <Zap className="w-4 h-4" />
-            {t('ai_analysis.title')}
+            {t('ai_analysis.analyze_image')}
           </button>
         </div>
       )}
