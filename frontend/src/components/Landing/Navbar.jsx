@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Menu, X, User, LogOut, Activity } from 'lucide-react'
+import { Menu, X, User, LogOut, Activity, ArrowLeft } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import LanguageSwitcher from '../common/LanguageSwitcher'
 
@@ -15,30 +15,28 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#f6f8f4]/90 backdrop-blur-xl border-b border-[#dce6df]">
-      <div className="flex justify-between items-center w-full px-5 py-4 max-w-7xl mx-auto">
-        <div className="flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-2 text-xl font-extrabold tracking-tight text-[#153b3b]">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#d7f0df] text-[#19705e]"><Activity className="h-5 w-5" /></span>
-            NABDA <span className="text-[#19705e]">Ai</span>
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-[#dce5e1]/80 bg-[#f7faf8]/90 backdrop-blur-xl">
+      <div className="mx-auto flex min-h-[76px] w-full max-w-7xl items-center justify-between gap-5 px-5 md:px-8">
+        <Link to="/" className="flex shrink-0 items-center gap-3 text-xl font-extrabold tracking-tight text-[#123b45]">
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#123b45] text-[#b9e6d0] shadow-sm"><Activity className="h-5 w-5" /></span>
+            <span>NABDA <span className="text-[#16856b]">Ai</span></span>
           </Link>
-          <div className="hidden md:flex gap-6">
-            <a href="#features" className="text-[#52706a] font-medium hover:text-[#19705e] transition-colors">
+          <div className="hidden items-center gap-7 md:flex">
+            <a href="#features" className="text-sm font-semibold text-[#58716f] transition-colors hover:text-[#16856b]">
               المميزات
             </a>
-            <a href="#how-it-works" className="text-[#52706a] font-medium hover:text-[#19705e] transition-colors">
+            <a href="#how-it-works" className="text-sm font-semibold text-[#58716f] transition-colors hover:text-[#16856b]">
               كيف يعمل
             </a>
-            <a href="#sos" className="text-[#52706a] font-medium hover:text-[#19705e] transition-colors">
+            <a href="#sos" className="text-sm font-semibold text-[#58716f] transition-colors hover:text-[#16856b]">
               SOS طوارئ
             </a>
-            <a href="#security" className="text-[#52706a] font-medium hover:text-[#19705e] transition-colors">
+            <a href="#security" className="text-sm font-semibold text-[#58716f] transition-colors hover:text-[#16856b]">
               الأمان
             </a>
           </div>
-        </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <div className="hidden sm:block">
             <LanguageSwitcher />
           </div>
@@ -47,14 +45,14 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <Link
                 to="/dashboard"
-                className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"
+                className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-[#36545a] transition-colors hover:bg-[#e9f3ee] hover:text-[#16856b]"
               >
                 <User className="w-5 h-5" />
                 <span className="hidden sm:block">{user?.full_name}</span>
               </Link>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 text-red-600 hover:text-red-700 transition-colors"
+                className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-[#c04d4b] transition-colors hover:bg-[#fff0ed]"
               >
                 <LogOut className="w-5 h-5" />
                 <span className="hidden sm:block">تسجيل خروج</span>
@@ -62,18 +60,18 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <Link to="/login" className="hidden sm:block text-[#52706a] font-medium hover:text-[#19705e] transition-colors">
+              <Link to="/login" className="hidden rounded-xl px-3 py-2 text-sm font-semibold text-[#58716f] transition-colors hover:bg-[#e9f3ee] hover:text-[#16856b] sm:block">
                 تسجيل الدخول
               </Link>
-              <Link to="/signup" className="bg-[#19705e] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-[#145548] transition-colors">
-                ابدأ الآن
+              <Link to="/signup" className="flex items-center gap-2 rounded-xl bg-[#16856b] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#106650] sm:px-5">
+                ابدأ الآن <ArrowLeft className="h-4 w-4" />
               </Link>
             </>
           )}
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="rounded-xl p-2 text-[#123b45] transition-colors hover:bg-[#e9f3ee] md:hidden"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -82,32 +80,32 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 py-4 px-6">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between py-2">
-              <span className="text-sm font-semibold text-gray-500">اللغة</span>
+        <div className="border-t border-[#dce5e1] bg-[#f7faf8] px-5 py-5 md:hidden">
+          <div className="mx-auto flex max-w-7xl flex-col gap-1">
+            <div className="mb-3 flex items-center justify-between rounded-2xl bg-white px-4 py-3 shadow-sm">
+              <span className="text-sm font-bold text-[#36545a]">اللغة</span>
               <LanguageSwitcher />
             </div>
-            <a href="#features" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>المميزات</a>
-            <a href="#how-it-works" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>كيف يعمل</a>
-            <a href="#sos" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>SOS طوارئ</a>
-            <a href="#security" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>الأمان</a>
-            <hr className="my-2" />
+            <a href="#features" className="rounded-xl px-4 py-3 text-sm font-semibold text-[#58716f] hover:bg-white" onClick={() => setIsOpen(false)}>المميزات</a>
+            <a href="#how-it-works" className="rounded-xl px-4 py-3 text-sm font-semibold text-[#58716f] hover:bg-white" onClick={() => setIsOpen(false)}>كيف يعمل</a>
+            <a href="#sos" className="rounded-xl px-4 py-3 text-sm font-semibold text-[#58716f] hover:bg-white" onClick={() => setIsOpen(false)}>SOS طوارئ</a>
+            <a href="#security" className="rounded-xl px-4 py-3 text-sm font-semibold text-[#58716f] hover:bg-white" onClick={() => setIsOpen(false)}>الأمان</a>
+            <div className="my-3 h-px bg-[#dce5e1]" />
             {isAuthenticated ? (
               <>
-                <Link to="/dashboard" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>
+                <Link to="/dashboard" className="rounded-xl px-4 py-3 text-sm font-semibold text-[#36545a] hover:bg-white" onClick={() => setIsOpen(false)}>
                   لوحة التحكم
                 </Link>
-                <button onClick={() => { handleLogout(); setIsOpen(false); }} className="text-red-600 py-2 text-right">
+                <button onClick={() => { handleLogout(); setIsOpen(false); }} className="rounded-xl px-4 py-3 text-right text-sm font-semibold text-[#c04d4b] hover:bg-[#fff0ed]">
                   تسجيل الخروج
                 </button>
               </>
             ) : (
               <>
-                <Link to="/login" className="text-gray-600 py-2" onClick={() => setIsOpen(false)}>
+                <Link to="/login" className="rounded-xl px-4 py-3 text-sm font-semibold text-[#58716f] hover:bg-white" onClick={() => setIsOpen(false)}>
                   تسجيل الدخول
                 </Link>
-                <Link to="/signup" className="bg-blue-600 text-white px-4 py-2 rounded-full text-center" onClick={() => setIsOpen(false)}>
+                <Link to="/signup" className="mt-2 rounded-xl bg-[#16856b] px-4 py-3 text-center text-sm font-bold text-white" onClick={() => setIsOpen(false)}>
                   ابدأ الآن
                 </Link>
               </>
