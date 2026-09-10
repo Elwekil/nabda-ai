@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Shield, RefreshCw, ArrowRight, Clock, AlertCircle } from 'lucide-react'
@@ -25,6 +25,7 @@ export default function VerifyOTP() {
   const [countdown, setCountdown] = useState(0)
   const [error, setError] = useState('')
   const [debugOtp, setDebugOtp] = useState(pendingVerification?.otp || '')
+  const inputRefs = useRef([])
   const { verifyOTP, resendOTP } = useAuth()
   const navigate = useNavigate()
 
@@ -33,6 +34,10 @@ export default function VerifyOTP() {
       navigate('/signup')
     }
   }, [email, navigate])
+
+  useEffect(() => {
+    inputRefs.current[0]?.focus()
+  }, [])
 
   useEffect(() => {
     if (email) {
@@ -67,7 +72,14 @@ export default function VerifyOTP() {
     // Only allow numbers
     if (value && !/^\d*$/.test(value)) return
     
-    if (value.length > 1) return
+    if (value.length > 1) {
+      const digits = value.replace(/\D/g, '').slice(0, 6)
+      if (digits.length === 6) {
+        setOtp(digits.split(''))
+        inputRefs.current[5]?.focus()
+      }
+      return
+    }
     const newOtp = [...otp]
     newOtp[index] = value
     setOtp(newOtp)
@@ -75,8 +87,7 @@ export default function VerifyOTP() {
     
     // Auto focus next input
     if (value && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`)
-      nextInput?.focus()
+      inputRefs.current[index + 1]?.focus()
     }
     
     // Auto submit when all digits are filled
@@ -90,8 +101,7 @@ export default function VerifyOTP() {
   const handleKeyDown = (index, e) => {
     // Handle backspace to go to previous input
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      const prevInput = document.getElementById(`otp-${index - 1}`)
-      prevInput?.focus()
+      inputRefs.current[index - 1]?.focus()
     }
   }
 
@@ -121,8 +131,7 @@ export default function VerifyOTP() {
       }
       // Clear OTP fields on error
       setOtp(['', '', '', '', '', ''])
-      // Focus first input
-      document.getElementById('otp-0')?.focus()
+      inputRefs.current[0]?.focus()
     } finally {
       setLoading(false)
     }
@@ -144,7 +153,7 @@ export default function VerifyOTP() {
       }))
       setCountdown(300) // Reset to 5 minutes
       setOtp(['', '', '', '', '', ''])
-      document.getElementById('otp-0')?.focus()
+      inputRefs.current[0]?.focus()
     } catch (error) {
       console.error('Resend failed:', error)
       setError(error.response?.data?.message || 'فشل في إعادة إرسال الرمز')
@@ -154,25 +163,26 @@ export default function VerifyOTP() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen bg-[#f4f8f6] px-4 py-8 md:py-12">
+      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center">
         {/* Logo & Brand */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl shadow-lg mb-6">
-            <Shield className="w-10 h-10 text-white" />
+        <div className="mb-7 text-center">
+          <div className="mx-auto mb-5 flex w-fit items-center gap-3 rounded-2xl bg-[#123b45] px-4 py-3 text-white shadow-sm">
+            <Shield className="h-5 w-5 text-[#b9e6d0]" />
+            <span className="text-lg font-extrabold tracking-tight">NABDA <span className="text-[#b9e6d0]">Ai</span></span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">تحقق من بريدك</h1>
-          <p className="text-gray-500 mt-2">
+          <h1 className="text-3xl font-extrabold text-[#123b45]">تحقق من بريدك</h1>
+          <p className="mt-2 leading-7 text-[#6b817e]">
             تم إرسال رمز التحقق إلى
             <br />
-            <strong className="text-primary-600">{email}</strong>
+            <strong className="text-[#16856b]">{email}</strong>
           </p>
         </div>
 
         {/* OTP Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="rounded-[2rem] border border-[#dce5e1] bg-white p-6 shadow-[0_20px_60px_rgba(18,59,69,0.10)] sm:p-8">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2 text-red-600 text-sm">
+            <div className="mb-4 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-600">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{error}</span>
             </div>
@@ -197,11 +207,11 @@ export default function VerifyOTP() {
               <label className="block text-sm font-medium text-gray-700 text-center mb-4">
                 أدخل رمز التحقق المكون من 6 أرقام
               </label>
-              <div className="flex justify-center gap-3">
+              <div className="flex justify-center gap-2 sm:gap-3" dir="ltr">
                 {otp.map((digit, index) => (
                   <input
                     key={index}
-                    id={`otp-${index}`}
+                    ref={(element) => { inputRefs.current[index] = element }}
                     type="text"
                     inputMode="numeric"
                     pattern="\d*"
@@ -209,10 +219,9 @@ export default function VerifyOTP() {
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className={`w-12 h-12 text-center text-2xl font-bold border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all ${
-                      error ? 'border-red-300' : 'border-gray-300'
+                    className={`h-14 w-11 rounded-xl border text-center text-2xl font-bold text-[#123b45] outline-none transition-all focus:border-[#16856b] focus:ring-4 focus:ring-[#b9e6d0]/60 sm:w-12 ${
+                      error ? 'border-red-300' : 'border-[#d5e2de]'
                     }`}
-                    autoFocus={index === 0}
                     disabled={loading}
                   />
                 ))}
@@ -230,11 +239,11 @@ export default function VerifyOTP() {
             </Button>
           </form>
 
-          <div className="text-center mt-6">
+          <div className="mt-6 border-t border-[#edf2ef] pt-5 text-center">
             <button
               onClick={handleResend}
               disabled={countdown > 0 || resendLoading}
-              className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-3 py-2 font-semibold text-[#16856b] transition-colors hover:bg-[#edf7f1] disabled:cursor-not-allowed disabled:text-gray-400"
             >
               {resendLoading ? (
                 <>
@@ -258,7 +267,7 @@ export default function VerifyOTP() {
 
         {/* Help Note */}
         <div className="text-center mt-6">
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-[#829490]">
             لم تصلك الرسالة؟ تحقق من صندوق الوارد أو البريد المزعج (Spam)
           </p>
         </div>
