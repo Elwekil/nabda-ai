@@ -87,8 +87,7 @@ const testDatabaseConnection = async () => {
 const startServer = async () => {
     const dbConnected = await testDatabaseConnection();
     if (!dbConnected) {
-        console.error(`${colors.red}❌ لا يمكن تشغيل الخادم بدون اتصال بقاعدة البيانات${colors.reset}`);
-        process.exit(1);
+        console.warn(`${colors.red}⚠️ Database unavailable; starting server in degraded local mode${colors.reset}`);
     }
 
     server.listen(PORT, () => {

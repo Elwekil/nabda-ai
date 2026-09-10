@@ -1,52 +1,48 @@
-export default function HowItWorks() {
-  const steps = [
-    {
-      number: "01",
-      icon: "📤",
-      title: "مسح أو رفع",
-      description: "التقط صورة لتقريرك الطبي أو ارفع PDF مباشرة. تقنية التعرف الضوئي على الحروف تقوم بتحويل البيانات رقمياً."
-    },
-    {
-      number: "02",
-      icon: "📊",
-      title: "معالجة الذكاء الاصطناعي",
-      description: "يقوم محركنا السريري بتحليل الاتجاهات بناءً على تاريخك الطبي والمعايير العالمية لاكتشاف الرؤى التي قد تفوتك."
-    },
-    {
-      number: "03",
-      icon: "✅",
-      title: "رؤى قابلة للتنفيذ",
-      description: "احصل على تفسيرات واضحة، أسئلة مقترحة للطبيب، وتعديلات في نمط الحياة مصممة خصيصاً لنتائجك."
-    }
-  ]
+const steps = [
+  {
+    number: '01',
+    title: 'Complete your profile',
+    description: 'Add the key details that help NABDA personalize your health journey without collecting unnecessary data.',
+  },
+  {
+    number: '02',
+    title: 'Upload your medical documents',
+    description: 'Support blood tests, prescriptions, doctor notes, discharge summaries, and other common medical records.',
+  },
+  {
+    number: '03',
+    title: 'NABDA extracts and organizes the information',
+    description: 'OCR, structured data extraction, and review help turn unstructured reports into usable health knowledge.',
+  },
+  {
+    number: '04',
+    title: 'Ask the AI assistant questions',
+    description: 'Understand symptoms, medication questions, lab results, and care recommendations in natural language.',
+  },
+]
 
+export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 px-6 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <div className="max-w-2xl space-y-4">
-            <span className="text-blue-600 text-sm uppercase tracking-widest font-semibold">الخطوات</span>
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
-              من البيانات إلى القرارات في ثلاث خطوات بسيطة
-            </h2>
-          </div>
-          <div className="hidden md:block pb-2">
-            <span className="text-gray-200 text-8xl">→</span>
-          </div>
+    <section id="how-it-works" className="bg-white px-5 py-24 md:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-14 max-w-2xl space-y-4">
+          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">How NABDA Works</span>
+          <h2 className="text-3xl font-black tracking-tight text-slate-900 md:text-5xl">
+            Your health data becomes clarity, action, and confidence.
+          </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {steps.map((step, index) => (
-            <div key={index} className="relative space-y-6 group">
-              <div className="text-8xl font-black text-gray-100 absolute -top-10 -left-4 group-hover:text-blue-100 transition-colors">
-                {step.number}
-              </div>
-              <div className="relative z-10 pt-4">
-                <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-3xl mb-6 shadow-lg">
-                  {step.icon}
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {steps.map((step) => (
+            <div key={step.number} className="group rounded-[28px] border border-slate-200 bg-slate-50 p-6 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:bg-white">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-3xl font-black text-slate-200 group-hover:text-emerald-100">{step.number}</span>
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-100 text-lg font-semibold text-emerald-700">
+                  {step.number}
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
               </div>
+              <h3 className="mb-3 text-xl font-bold text-slate-900">{step.title}</h3>
+              <p className="text-base leading-7 text-slate-600">{step.description}</p>
             </div>
           ))}
         </div>

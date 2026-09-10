@@ -1,67 +1,124 @@
 import { Link } from 'react-router-dom'
-import { ArrowLeft, CheckCircle2, HeartPulse, ShieldCheck, Sparkles } from 'lucide-react'
+import { ArrowRight, Bot, CheckCircle2, FileText, HeartPulse, ShieldCheck, Sparkles } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+
+const capabilityList = [
+  'AI Health Assistant',
+  'Medical Document OCR',
+  'Personal Health Profile',
+]
 
 export default function Hero() {
   const { isAuthenticated } = useAuth()
 
   return (
-    <header className="relative overflow-hidden border-b border-[#dce5e1] bg-[#f7faf8] px-5 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
-      <div className="absolute inset-x-0 top-0 h-2 bg-[#16856b]" />
-      <div className="absolute inset-y-0 right-0 hidden w-1/3 border-l border-[#dce5e1] bg-[#eef6f1] lg:block" />
-      <div className="relative mx-auto grid max-w-7xl items-center gap-14 md:grid-cols-[1.02fr_.98fr]">
-        <div className="space-y-8" dir="rtl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#cce2d3] bg-white px-4 py-2 text-sm font-semibold text-[#16856b] shadow-sm">
-            <Sparkles className="h-4 w-4" /> رعاية أذكى تبدأ من بياناتك
+    <header className="relative overflow-hidden border-b border-slate-200 bg-white px-5 pb-20 pt-28 md:px-8 md:pb-28 md:pt-36">
+      <div className="absolute inset-x-0 top-0 h-1 bg-emerald-500" />
+      <div className="absolute right-0 top-0 hidden h-full w-1/3 bg-slate-50 lg:block" />
+      <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="space-y-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700 shadow-sm">
+            <Sparkles className="h-4 w-4" /> Healthcare intelligence for everyday decisions
           </div>
-          <div className="space-y-4">
-            <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.18] tracking-tight text-[#123b45] md:text-6xl">
-              كل تفاصيل صحتك، في مكان واحد وبوضوح.
+
+          <div className="space-y-5">
+            <h1 className="max-w-2xl text-4xl font-black tracking-tight text-slate-900 md:text-6xl">
+              Understand Your Health.
+              <span className="mt-2 block text-emerald-600">Powered by AI.</span>
             </h1>
-            <p className="max-w-xl text-lg leading-8 text-[#58716f] md:text-xl">
-              NABDA Ai يساعدك على فهم تقاريرك، تنظيم أدويتك، ومتابعة مؤشراتك اليومية بهدوء وأمان.
+            <p className="max-w-xl text-lg leading-8 text-slate-600 md:text-xl">
+              Analyze medical documents, understand health information, organize your medical profile, and interact with an AI health assistant — all in one place.
             </p>
           </div>
-          <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
+
+          <div className="flex flex-col gap-3 sm:flex-row">
             {isAuthenticated ? (
-              <Link to="/dashboard" className="flex items-center justify-center gap-2 rounded-xl bg-[#16856b] px-7 py-3.5 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#106650]">
-                اذهب إلى لوحة التحكم <ArrowLeft className="h-5 w-5" />
+              <Link to="/dashboard" className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-slate-200 transition hover:bg-slate-800">
+                Go to dashboard <ArrowRight className="h-4 w-4" />
               </Link>
             ) : (
               <>
-                <Link to="/signup" className="flex items-center justify-center gap-2 rounded-xl bg-[#16856b] px-7 py-3.5 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#106650]">
-                  ابدأ مجانًا <ArrowLeft className="h-5 w-5" />
+                <Link to="/signup" className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-100 transition hover:bg-emerald-500">
+                  Get Started <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link to="/login" className="flex items-center justify-center rounded-xl border border-[#cce2d3] bg-white px-7 py-3.5 text-base font-bold text-[#16856b] transition-colors hover:bg-[#edf5ef]">
-                  تسجيل الدخول
+                <Link to="/login" className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-base font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50">
+                  Explore NABDA
                 </Link>
               </>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-semibold text-[#58716f]">
-            <span className="flex items-center gap-2"><CheckCircle2 className="h-5 w-5 text-[#16856b]" /> خصوصية أولًا</span>
-            <span className="flex items-center gap-2"><CheckCircle2 className="h-5 w-5 text-[#16856b]" /> مصمم للعائلة</span>
+
+          <div className="flex flex-wrap items-center gap-3 pt-2 text-sm font-medium text-slate-600">
+            {capabilityList.map((item) => (
+              <span key={item} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                {item}
+              </span>
+            ))}
           </div>
         </div>
-        <div className="relative mx-auto w-full max-w-[31rem]">
-          <div className="relative rounded-[2rem] border border-[#dce5e1] bg-white p-3 shadow-[0_24px_70px_rgba(18,59,69,0.14)]">
-            <div className="rounded-[1.5rem] bg-[#123b45] p-6 text-white md:p-8" dir="rtl">
-              <div className="flex items-start justify-between">
+
+        <div className="relative mx-auto w-full max-w-[34rem]">
+          <div className="rounded-[28px] border border-slate-200 bg-white p-3 shadow-[0_24px_80px_rgba(15,23,42,0.12)]">
+            <div className="rounded-[22px] bg-slate-900 p-5 text-white md:p-6">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div>
-                  <p className="text-sm text-[#b9d8c4]">ملخصك اليومي</p>
-                  <h2 className="mt-1 text-2xl font-bold">صباح هادئ، أحمد</h2>
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-300">NABDA AI</p>
+                  <h2 className="mt-2 text-2xl font-bold">Your health overview</h2>
                 </div>
-                <div className="rounded-xl bg-white/10 p-3"><HeartPulse className="h-6 w-6 text-[#b9e6d0]" /></div>
+                <div className="rounded-2xl bg-emerald-500/15 p-3 text-emerald-300">
+                  <HeartPulse className="h-6 w-6" />
+                </div>
               </div>
-              <div className="mt-8 flex items-end justify-between rounded-2xl bg-white/10 p-5">
-                <div><p className="text-sm text-[#b9e6d0]">مؤشر العافية</p><p className="mt-1 text-4xl font-extrabold">84<span className="text-lg text-[#b9e6d0]">/100</span></p></div>
-                <div className="flex h-20 items-end gap-1.5">{[32, 45, 38, 62, 54, 74, 86].map((height, index) => <span key={index} className="w-2 rounded-full bg-[#b9e6d0]" style={{ height: `${height}%` }} />)}</div>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-wide text-slate-300">Profile</p>
+                  <p className="mt-3 text-2xl font-bold">81%</p>
+                </div>
+                <div className="rounded-2xl bg-emerald-500/10 p-4 text-emerald-100">
+                  <p className="text-xs uppercase tracking-wide">Docs</p>
+                  <p className="mt-3 text-2xl font-bold">12</p>
+                </div>
+                <div className="rounded-2xl bg-sky-500/10 p-4 text-sky-100">
+                  <p className="text-xs uppercase tracking-wide">Vitals</p>
+                  <p className="mt-3 text-2xl font-bold">Healthy</p>
+                </div>
               </div>
-              <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-                <div className="rounded-2xl bg-[#f2c879] p-4 text-[#123b45]"><p className="font-semibold">الأدوية</p><p className="mt-2 text-xl font-extrabold">2 / 3</p></div>
-                <div className="rounded-2xl bg-[#b9e6d0] p-4 text-[#123b45]"><p className="font-semibold">النبض</p><p className="mt-2 text-xl font-extrabold">72 bpm</p></div>
+
+              <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="flex items-center justify-between text-sm text-slate-200">
+                  <span>Health summary</span>
+                  <span className="text-emerald-300">Stable</span>
+                </div>
+                <div className="mt-4 flex h-16 items-end gap-2">
+                  {[35, 48, 42, 58, 66, 74, 82].map((height, index) => (
+                    <span key={index} className="flex-1 rounded-t-xl bg-gradient-to-t from-emerald-400 to-emerald-200" style={{ height: `${height}%` }} />
+                  ))}
+                </div>
               </div>
-              <div className="mt-4 flex items-center gap-2 text-sm text-[#b9e6d0]"><ShieldCheck className="h-4 w-4" /> بياناتك مشفرة ومحمية</div>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <div className="flex items-center gap-2 text-slate-200">
+                    <FileText className="h-4 w-4 text-emerald-300" />
+                    Latest report
+                  </div>
+                  <p className="mt-3 text-sm text-slate-100">Blood test review ready</p>
+                </div>
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <div className="flex items-center gap-2 text-slate-200">
+                    <Bot className="h-4 w-4 text-emerald-300" />
+                    AI Assistant
+                  </div>
+                  <p className="mt-3 text-sm text-slate-100">Explain this report</p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
+                <ShieldCheck className="h-4 w-4" />
+                Your medical information stays protected and organized
+              </div>
             </div>
           </div>
         </div>

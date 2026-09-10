@@ -11,21 +11,18 @@ export default function Landing() {
   const { isAuthenticated, user } = useAuth()
 
   return (
-    <div className="min-h-screen bg-[#f7f9fc]">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
       <Hero />
-      
-      {/* Optional: Show welcome message for logged in users */}
+
       {isAuthenticated && user && (
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-            <p className="text-green-700">
-              مرحباً بعودتك {user.full_name}! 🎉
-            </p>
+        <div className="mx-auto max-w-7xl px-6 pb-2 pt-4">
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm font-medium text-emerald-800">
+            Welcome back, {user.full_name || 'NABDA user'}.
           </div>
         </div>
       )}
-      
+
       <Features />
       <HowItWorks />
       <Security />

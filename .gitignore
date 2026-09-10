@@ -1,0 +1,19 @@
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+**/node_modules/
+package-lock.json
+
+# Build output
+/dist/
+**/dist/
+coverage/
+*.log
+
+# OS/editor files
+.DS_Store
+.vscode/
